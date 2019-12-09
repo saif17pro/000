@@ -1,0 +1,46 @@
+<html>
+<head>
+<script type="text/javascript" language="javascript">
+var Reqobj=false;
+if(window.XMLHttpRequest)
+{
+	Reqobj=new XMLHttpRequest();
+}
+else if(window.ActiveXobject)
+{
+	Reqobj=new ActiveXObject("Microsoft.XMLHTTP");
+}
+function getdata(dataSource,DivId) 
+{
+		if(Reqobj)
+		{ var uname=document.getElementById('t1').value;
+			Reqobj.open("POST",dataSource);
+			Reqobj.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+			Reqobj.onreadystatechange=function()
+			{
+				if(Reqobj.readyState==4 && Reqobj.status==200)
+				{
+					var d=document.getElementById(DivId);
+					d.innerHTML=Reqobj.responseText;
+				}
+			}
+			Reqobj.send("uname="+uname);
+		}
+		else{
+			alert("Error:Request Object not created");
+		}
+		//Reqobj.send(null);
+	}
+</script>
+</head>
+<body>
+<h1>Working with AJAX</h1>
+<form>
+username:<input type="text" id='t1' name="a"><br>
+<input type="button" value="check" onclick="getdata('q5.php','mydiv')">
+<div id="mydiv">
+<p> Responce msg displayed here</p>
+</div>
+</form>
+</body>
+</html>
